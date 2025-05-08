@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>IMM 120 Final Project</title>
+<link href="styles.css" rel="stylesheet">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<div id="wrapper">
+<header><h1>IMM 120 FINAL PROJECT</h1>
+</header>
+<nav>
+<b>
+<a href="index.html">Home</a>&nbsp; &nbsp; &nbsp;&nbsp;
+<a href="games.html">Games&nbsp;</a>&nbsp; &nbsp; &nbsp;&nbsp;
+<a href="about.html">About</a>
+</b>
+</nav>
+</div>
+
+<h1>GAMES</h1>
+
+<main>
+
+  <table id="gamesTable" class="center">
+    <thead>
+      <tr>
+        <th>Game title</th>
+        <th>Status</th>
+        <th>Release year</th>
+        <th>Rating</th>
+        <th>Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+    </tbody>
+  </table>
+
+  <p class="center">
+    Fill out this form to add a game to the list
+  </p>
+
+  <form id="gameSubmission" class="center">
+    <label for="title">Title: </label>
+    <input type="text" id="title" name="title" required>
+
+    <label for="status">Status: </label>
+    <input type="text" id="status" name="status" required>
+
+    <label for="year">Release year: </label>
+    <input type="number" id="year" name="year" required>
+
+    <label for="rating">Rating: </label>
+    <input type="text" id="rating" name="rating" required>
+
+    <label for="notes">Notes:</label>
+    <textarea id="notes" name="notes" rows="2" cols="30"></textarea>
+
+    <input type="submit" value="Submit">
+  </form>
+
+</main>
+
+<script>
+  const form = document.getElementById('gameSubmission');
+  const tableBody = document.getElementById('gamesTable').getElementsByTagName('tbody')[0];
+  const savedData = JSON.parse(localStorage.getItem('tableData') || '[]');
+  savedData.forEach(entry => {
+    addRow(entry.title, entry.status, entry.year, entry.rating, entry.notes);
+  });
+  form.addEventListener('submit', function(event) {
+    event.preventDefault();
+    const title = document.getElementById('title').value.trim();
+    const status = document.getElementById('status').value.trim();
+    const year = document.getElementById('year').value.trim();
+    const rating = document.getElementById('rating').value.trim();
+    const notes = document.getElementById('notes').value.trim();
+    addRow(title, status, year, rating, notes);
+    savedData.push({ title, status, year, rating, notes });
+    localStorage.setItem('tableData', JSON.stringify(savedData));
+    form.reset();
+  });
+  function addRow(title, status, year, rating, notes) {
+    const newRow = tableBody.insertRow();
+    newRow.insertCell(0).textContent = title;
+    newRow.insertCell(1).textContent = status;
+    newRow.insertCell(2).textContent = year;
+    newRow.insertCell(3).textContent = rating;
+    newRow.insertCell(4).textContent = notes;
+  }
+</script>
+
+<footer>
+  <p><i><small>
+  <a href="mailto:jgreway@mail.dccc.edu"><span class="link">jgreway@mail.dccc.edu</span></a></small></i></p>
+	
+  <p><i><small>
+    This website was made for an assignment at Delaware County Community College: 
+	<a href="dccc.edu"><span class="link">dccc.edu</span></a>
+  </small></i></p>
+	
+  <p><i><small>
+  Some information sourced from <a href="wikipedia.org"><span class="link">wikipedia.org</span></a>
+  </small></i></p>
+</footer>
+</body>
+</html>
